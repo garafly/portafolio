@@ -1,0 +1,1 @@
+export type ViewMode = "intro" | "designer" | "programmer" | "animator";
