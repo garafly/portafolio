@@ -126,8 +126,23 @@ export type ThemeTokens = {
   toggleShellClass: string;
   dotActiveClass: string;
   dotInactiveClass: string;
-  emphasis:string
-};
+  emphasis:string;
+  rightPanelTitle: string;
+
+  modalTitle: string,
+  modalSubheader: string,
+  modalOverlayClass: string;
+  modalSurfaceClass: string;
+  modalLeftRailClass: string;
+  modalLeftRailBorderClass: string;
+  modalCloseButtonClass: string;
+  modalBodyTextClass: string;
+  modalMetaLabelClass: string;
+  modalMetaTextClass: string;
+  modalTagClass: string;
+  modalPrimaryButtonClass: string;
+  modalSecondaryButtonClass: string;
+  };
 
 export type TextSize = "sm" | "md" | "lg" | "xl";
 

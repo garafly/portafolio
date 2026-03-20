@@ -26,9 +26,24 @@ export const themeTokens: Record<ThemeMode, ThemeTokens> = {
     toggleShellClass: "bg-[#8fb3df]",
     dotActiveClass: "bg-[#4b7fbe]",
     dotInactiveClass: "bg-[#9db0cb]",
-    emphasis:"bg-[#4da0ff]"
+    emphasis: "bg-[#4da0ff]",
+    rightPanelTitle: "text-[#405b76]",
 
+    modalTitle: "text-[#3d5a7d]",
+    modalSubheader: "text-[#32aafc]",
+    modalOverlayClass: "bg-black/50",
+    modalSurfaceClass: "border-white/75 bg-[#f3f4f6]/98",
+    modalLeftRailClass: "bg-white/16",
+    modalLeftRailBorderClass: "border-white/40",
+    modalCloseButtonClass: "border-white/75 bg-white text-[#1e63c8]",
+    modalBodyTextClass: "text-[#1e63c8]",
+    modalMetaLabelClass: "text-[#6f89ab]",
+    modalMetaTextClass: "text-[#3d5a7d]",
+    modalTagClass: "border border-white/60 bg-white/45 text-[#1e63c8]",
+    modalPrimaryButtonClass: "bg-[#1e63c8] text-white",
+    modalSecondaryButtonClass: "border border-[#d6e1f2] bg-white text-[#1e63c8]",
   },
+
   dark: {
     mode: "dark",
     pageBackgroundClass:
@@ -53,6 +68,21 @@ export const themeTokens: Record<ThemeMode, ThemeTokens> = {
     toggleShellClass: "bg-[#0b1f3a]",
     dotActiveClass: "bg-[#4da0ff]",
     dotInactiveClass: "bg-[#7b95b7]",
-    emphasis:"bg-[#4da0ff]"
+    emphasis: "bg-[#4da0ff]",
+    rightPanelTitle: "text-[#d7e1f0]",
+
+    modalTitle: "text-[#9ce5fd]",
+    modalSubheader: "text-white",
+    modalOverlayClass: "bg-black/50",
+    modalSurfaceClass: "border-white/55 bg-[#7f8da4]/98",
+    modalLeftRailClass: "bg-[#5f7391]/45",
+    modalLeftRailBorderClass: "border-white/12",
+    modalCloseButtonClass: "border-white/55 bg-[#496285] text-white",
+    modalBodyTextClass: "text-white",
+    modalMetaLabelClass: "text-white/70",
+    modalMetaTextClass: "text-white",
+    modalTagClass: "border border-white/28 bg-[#4f6586]/70 text-white",
+    modalPrimaryButtonClass: "bg-white text-[#17355f]",
+    modalSecondaryButtonClass: "border border-white/40 bg-[#496285] text-white",
   },
 };

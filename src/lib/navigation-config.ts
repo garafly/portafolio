@@ -1,0 +1,61 @@
+import type { VerticalMenuItem } from "@/types";
+
+export const verticalMenuItems: VerticalMenuItem[] = [
+  {
+    id: "about",
+    type: "action",
+    label: "About / CV",
+    action: "open-about-modal",
+    iconKind: "lucide",
+    iconName: "user",
+  },
+  {
+    id: "instagram",
+    type: "external",
+    label: "Instagram",
+    href: "https://instagram.com/garafly",
+    iconKind: "react-icons",
+    iconName: "instagram",
+  },
+  {
+    id: "threads",
+    type: "external",
+    label: "Threads",
+    href: "https://threads.net/@garafly",
+    iconKind: "react-icons",
+    iconName: "threads",
+  },
+  {
+    id: "behance",
+    type: "external",
+    label: "Behance",
+    href: "https://www.behance.net/garafly",
+    iconKind: "react-icons",
+    iconName: "behance",
+  },
+  {
+    id: "linkedin",
+    type: "external",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/garafly",
+    iconKind: "react-icons",
+    iconName: "linkedin",
+  },
+  {
+    id: "github",
+    type: "external",
+    label: "GitHub",
+    href: "https://github.com/garafly",
+    iconKind: "react-icons",
+    iconName: "github",
+  },
+  {
+    id: "email",
+    type: "email",
+    label: "Email me",
+    email: "sgr.saragarciarosado@gmail.com",
+    subject: "Hello Sara — Portfolio Inquiry",
+    iconKind: "lucide",
+    iconName: "mail",
+  },
+];

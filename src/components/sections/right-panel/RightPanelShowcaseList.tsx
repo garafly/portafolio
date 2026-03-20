@@ -19,7 +19,7 @@ export default function RightPanelShowcaseList({
   return (
     <div className="w-full max-w-110">
       {content.rightPanelTitle ? (
-        <h2 className={cn("mb-4 text-xl font-bold", theme.titleClass)}>
+        <h2 className={cn("mb-4 text-xl font-bold", theme.softTextClass)}>
           {content.rightPanelTitle}
         </h2>
       ) : null}

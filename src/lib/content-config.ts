@@ -425,7 +425,7 @@ export const portfolioContent: PortfolioContentConfig = {
     ],
     showcaseLabel: "ThreeJS / Experience Chick",
     rightPanelVariant: "showcaseList",
-    rightPanelTitle: "Selected motion work:",
+    rightPanelTitle: "Some of my work:",
     workItems: [
         {
         id: "anim-1",
