@@ -73,11 +73,39 @@ export type PillItem = {
   icon?: CardIcon;
 };
 
+export type WorkItemTag = {
+  id: string;
+  label: string;
+};
+
+export type WorkItemMedia =
+  | {
+      id: string;
+      type: "image";
+      src: string;
+      alt: string;
+    }
+  | {
+      id: string;
+      type: "video";
+      src: string;
+      title: string;
+      poster?: string;
+    };
+
 export type WorkItem = {
   id: string;
   title: string;
-  description: string;
-  image: string;
+  summary: string;
+  involvement: string;
+  year?: string;
+  mainImage: {
+    src: string;
+    alt: string;
+  };
+  gallery?: WorkItemMedia[];
+  tags?: WorkItemTag[];
+  liveUrl?: string;
 };
 
 export type RightPanelVariant = "profile" | "showcaseList";
@@ -114,12 +142,15 @@ export type ThemeTokens = {
   cardBgClass: string;
   cardBorderClass: string;
   cardTextClass: string;
+  displayBoxBgClass:string,
+  displayBoxBorderClass:string,
   softTextClass: string;
   accentTextClass: string;
   accentSecondaryClass: string;
   showcaseOutlineClass: string;
   showcaseControlBgClass: string;
   panelBgClass: string;
+  panelCardBgClass: string;
   dividerClass: string;
   logoClass: string;
   footerTextClass: string;
@@ -128,6 +159,7 @@ export type ThemeTokens = {
   dotInactiveClass: string;
   emphasis:string;
   rightPanelTitle: string;
+  galleryBgClass: string
 
   modalTitle: string,
   modalSubheader: string,

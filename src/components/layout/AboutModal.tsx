@@ -5,13 +5,15 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { themeTokens } from "@/lib/theme-config";
-import { aboutModalContent } from "@/lib/about-modal-content";
+// import { aboutModalContent } from "@/lib/about-modal-content";
 import type { ThemeMode, AboutModalAction } from "@/types";
+import type { AboutModalContent } from "@/types";
 
 type AboutModalProps = {
   isOpen: boolean;
   onClose: () => void;
   themeMode: ThemeMode;
+  content: AboutModalContent;
 };
 
 function getActionHref(action: AboutModalAction) {
@@ -36,9 +38,10 @@ export default function AboutModal({
   isOpen,
   onClose,
   themeMode,
+  content,
 }: AboutModalProps) {
   const theme = themeTokens[themeMode];
-  const content = aboutModalContent;
+  // const content = aboutModalContent;
 
   useEffect(() => {
     if (!isOpen) return;

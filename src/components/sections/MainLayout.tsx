@@ -1,24 +1,36 @@
 "use client";
+
 import { useState } from "react";
-import AboutModal from "@/components/layout/AboutModal";
-import VerticalMenu from "@/components/layout/VerticalMenu";
 import Image from "next/image";
+
 import Navbar from "@/components/layout/Navbar";
+import MobileNavbar from "@/components/layout/MobileNavbar";
 import ThemeToggle from "@/components/layout/ThemeToggle";
+import VerticalMenu from "@/components/layout/VerticalMenu";
+import AboutModal from "@/components/layout/AboutModal";
+import LanguageToggle from "@/components/layout/LanguageToggle";
+
 import ModeContent from "@/components/modes/ModeContent";
 import RightPanel from "@/components/sections/RightPanel";
 import ShowcaseCanvas from "@/components/showcase/ShowcaseCanvas";
+import ProjectDetailView from "@/components/sections/right-panel/ProjectDetailView";
+
+import { portfolioContent } from "@/lib/content-config";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
-import type { ThemeMode, ViewMode } from "@/types";
 
-
+import type { ThemeMode, ViewMode, Locale } from "@/types";
+import { aboutModalContent } from "@/lib/about-modal-content";
 
 type MainLayoutProps = {
   mode: ViewMode;
   setMode: (mode: ViewMode) => void;
   themeMode: ThemeMode;
   setThemeMode: (theme: ThemeMode) => void;
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
+  selectedProjectId: string | null;
+  setSelectedProjectId: (id: string | null) => void;
 };
 
 export default function MainLayout({
@@ -26,71 +38,156 @@ export default function MainLayout({
   setMode,
   themeMode,
   setThemeMode,
+  locale,
+  setLocale,
+  selectedProjectId,
+  setSelectedProjectId,
 }: MainLayoutProps) {
   const theme = themeTokens[themeMode];
-
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const localizedAboutContent = aboutModalContent[locale];
 
   const logoIconSrc =
-  themeMode === "dark" ? "/logo_icon_dark.png" : "/logo_icon.png";
+    themeMode === "dark" ? "/logo_icon_dark.png" : "/logo_icon.png";
 
   const logoSrc =
-  themeMode === "dark" ? "/logo_dark.png" : "/logo.png";
+    themeMode === "dark" ? "/logo_dark.png" : "/logo.png";
 
+  const localizedContent = portfolioContent[locale];
+const currentModeContent = localizedContent.modes[mode];
+
+  const selectedProject =
+    selectedProjectId && currentModeContent.workItems
+      ? currentModeContent.workItems.find(
+          (item) => item.id === selectedProjectId
+        ) ?? null
+      : null;
 
   return (
-    <main className={cn("min-h-screen px-6 py-6 lg:px-10", theme.pageBackgroundClass)}>
+    <main
+      className={cn(
+        "min-h-screen overflow-x-hidden px-4 py-4 sm:px-6 sm:py-6 lg:px-10",
+        theme.pageBackgroundClass
+      )}
+    >
       <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-425 flex-col">
-        <header className="mb-6 flex items-start justify-between gap-6">
-<button
-  type="button"
-  onClick={() => setMode("intro")}
-  className="flex h-24 w-24 shrink-0 items-center justify-end"
-  aria-label="Go to intro"
->
-  <Image
-    src={logoIconSrc}
-    alt="Garafly icon logo"
-    width={42}
-    height={60}
-    className="h-auto w-auto object-contain px-2"
-    priority
-  />
-</button>
+        {/* HEADER */}
+        <header className="mb-6">
+          <div className="flex items-start justify-between gap-6">
+            {/* Logo */}
+            <button
+              type="button"
+              onClick={() => {
+                setMode("intro");
+                setSelectedProjectId(null);
+              }}
+              className="flex h-24 w-24 shrink-0 items-center  md:pr-2 md:justify-end"
+              aria-label="Go to intro"
+            >
+              <Image
+                src={logoIconSrc}
+                alt="Garafly icon logo"
+                width={48}
+                height={48}
+                className="h-auto w-auto object-contain "
+                priority
+              />
+            </button>
 
-          <div className="flex-1 pt-3">
-            <Navbar mode={mode} setMode={setMode} themeMode={themeMode} />
+            {/* Desktop Navbar */}
+            <div className="hidden flex-1 pt-3 md:block">
+              <Navbar
+                mode={mode}
+                setMode={setMode}
+                themeMode={themeMode}
+                navItems={localizedContent.navItems}
+              />
+            </div>
+
+            {/* Toggle */}
+            <div className="shrink-0 pt-6">
+              <ThemeToggle
+                themeMode={themeMode}
+                setThemeMode={setThemeMode}
+              />
+            </div>
           </div>
 
-          <div className="shrink-0 pt-2">
-            <ThemeToggle themeMode={themeMode} setThemeMode={setThemeMode} />
+          {/* Mobile Navbar */}
+          <div className="mt-3 md:hidden">
+            <MobileNavbar
+              mode={mode}
+              setMode={setMode}
+              themeMode={themeMode}
+              navItems={localizedContent.navItems}
+            />
           </div>
         </header>
 
-        <div className="grid flex-1 grid-cols-1 gap-10 xl:grid-cols-[120px_minmax(340px,1fr)_minmax(420px,560px)_minmax(360px,1fr)]">
+        {/* PROJECT DETAIL MODE */}
+        {selectedProject ? (
+          <div className="grid flex-1 grid-cols-1 gap-10 xl:grid-cols-[120px_minmax(0,1fr)]">
             <aside className="hidden xl:flex">
-            <VerticalMenu
+              <VerticalMenu
                 themeMode={themeMode}
-                setMode={setMode}
+                setMode={(nextMode) => {
+                  setMode(nextMode);
+                  setSelectedProjectId(null);
+                }}
                 onOpenAboutModal={() => setIsAboutModalOpen(true)}
-            />
+              />
             </aside>
 
-            <section className="flex items-start pt-4">
-                <ModeContent mode={mode} themeMode={themeMode} />
+            <section className="pt-6">
+              <ProjectDetailView
+                project={selectedProject}
+                themeMode={themeMode}
+                onBack={() => setSelectedProjectId(null)}
+              />
+            </section>
+          </div>
+        ) : (
+          /* NORMAL MODE */
+          <div className="grid flex-1 grid-cols-1 gap-10 md:w-[90%] xl:w-full xl:grid-cols-[120px_minmax(340px,1fr)_minmax(420px,560px)_minmax(360px,1fr)]">
+            {/* Vertical Menu */}
+            <aside className="hidden xl:flex">
+              <VerticalMenu
+                themeMode={themeMode}
+                setMode={(nextMode) => {
+                  setMode(nextMode);
+                  setSelectedProjectId(null);
+                }}
+                onOpenAboutModal={() => setIsAboutModalOpen(true)}
+              />
+            </aside>
+
+            {/* Left */}
+            <section className="min-w-0 px-4 pt-4 md:px-10 xl:px-0">
+              <ModeContent
+                content={currentModeContent}
+                themeMode={themeMode}
+              />
             </section>
 
-            <section className="flex flex-col items-center justify-start pt-8">
-                <ShowcaseCanvas mode={mode} themeMode={themeMode} />
+            {/* Center */}
+            <section className="min-w-0 px-4 pt-8 md:p-10 xl:p-0">
+              <ShowcaseCanvas mode={mode} themeMode={themeMode} />
             </section>
 
-            <section className="flex items-start justify-center pt-8">
-                <RightPanel mode={mode} themeMode={themeMode} />
+            {/* Right */}
+            <section className="min-w-0 p-8 px-4 md:p-10 xl:p-0">
+              <RightPanel
+                content={currentModeContent}
+                themeMode={themeMode}
+                setSelectedProjectId={setSelectedProjectId}
+              />
             </section>
-        </div>
+          </div>
+        )}
 
+        {/* FOOTER */}
         <footer className="mt-10 flex justify-center">
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <Image
               src={logoSrc}
               alt="Garafly logo"
@@ -100,17 +197,26 @@ export default function MainLayout({
               priority
             />
 
-            <div className={cn("text-sm h-full flex items-center pt-2 pl-1", theme.footerTextClass)}>
+            <div className={cn("pt-3 text-sm", theme.footerTextClass)}>
               ©2026 All rights reserved
             </div>
           </div>
         </footer>
       </div>
-        <AboutModal
-            isOpen={isAboutModalOpen}
-            onClose={() => setIsAboutModalOpen(false)}
-            themeMode={themeMode}
-        />
+
+      <LanguageToggle
+        locale={locale}
+        setLocale={setLocale}
+        themeMode={themeMode}
+      />
+
+      {/* ABOUT MODAL */}
+      <AboutModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
+        themeMode={themeMode}
+        content={localizedAboutContent}
+      />
     </main>
   );
 }

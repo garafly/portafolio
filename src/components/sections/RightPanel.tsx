@@ -1,21 +1,31 @@
-import { portfolioContent } from "@/lib/content-config";
-import type { ThemeMode, ViewMode } from "@/types";
+import type { ThemeMode } from "@/types";
+import type { ModeContent as ModeContentType } from "@/types/content-config";
 import RightPanelProfile from "./right-panel/RightPanelProfile";
 import RightPanelShowcaseList from "./right-panel/RightPanelShowcaseList";
 
 type RightPanelProps = {
-  mode: ViewMode;
+  content: ModeContentType;
   themeMode: ThemeMode;
+  setSelectedProjectId: (id: string) => void;
 };
 
-export default function RightPanel({ mode, themeMode }: RightPanelProps) {
-  const content = portfolioContent.modes[mode];
-
+export default function RightPanel({
+  content,
+  themeMode,
+  setSelectedProjectId,
+}: RightPanelProps) {
   switch (content.rightPanelVariant) {
     case "showcaseList":
-      return <RightPanelShowcaseList mode={mode} themeMode={themeMode} />;
+      return (
+        <RightPanelShowcaseList
+          content={content}
+          themeMode={themeMode}
+          setSelectedProjectId={setSelectedProjectId}
+        />
+      );
+
     case "profile":
     default:
-      return <RightPanelProfile mode={mode} themeMode={themeMode} />;
+      return <RightPanelProfile content={content} themeMode={themeMode} />;
   }
 }

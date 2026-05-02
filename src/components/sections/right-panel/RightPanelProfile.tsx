@@ -1,19 +1,19 @@
-import { portfolioContent } from "@/lib/content-config";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
-import type { ThemeMode, ViewMode } from "@/types";
+import type { ThemeMode } from "@/types";
+import type { ModeContent as ModeContentType } from "@/types/content-config";
 import ConfigIcon from "@/components/ui/ConfigIcon";
+import KeyboardLightsShowcase from "@/components/sections/right-panel/InteractiveKeyboard";
 
 type RightPanelProfileProps = {
-  mode: ViewMode;
+  content: ModeContentType;
   themeMode: ThemeMode;
 };
 
 export default function RightPanelProfile({
-  mode,
+  content,
   themeMode,
 }: RightPanelProfileProps) {
-  const content = portfolioContent.modes[mode];
   const theme = themeTokens[themeMode];
 
   return (
@@ -21,13 +21,11 @@ export default function RightPanelProfile({
       <div
         className={cn(
           "flex h-85 w-full max-w-90 items-center justify-center rounded-4xl border p-6 shadow-sm backdrop-blur-sm",
-          theme.cardBgClass,
-          theme.cardBorderClass
+          theme.displayBoxBgClass,
+          theme.displayBoxBorderClass
         )}
       >
-        <p className={cn("text-center text-xl", theme.bodyClass)}>
-          {content.rightPanelTopText}
-        </p>
+        <KeyboardLightsShowcase />
       </div>
 
       <div className="flex flex-wrap justify-center gap-4">

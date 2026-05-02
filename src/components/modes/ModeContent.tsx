@@ -1,30 +1,32 @@
-import { portfolioContent } from "@/lib/content-config";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
-import type { RichTextSegment, ThemeTokens } from "@/types/content-config";
-import type { ThemeMode, ViewMode } from "@/types";
+import type {
+  ModeContent as ModeContentType,
+  RichTextSegment,
+  ThemeTokens,
+} from "@/types/content-config";
+import type { ThemeMode } from "@/types";
 import ConfigIcon from "@/components/ui/ConfigIcon";
-import Image from "next/image";
 import ToolPagerCard from "@/components/ui/ToolPagerCard";
 import ToolGrid from "@/components/ui/ToolGrid";
 import AnimatedIconCard from "@/components/ui/AnimatedIconCard";
 
 type ModeContentProps = {
-  mode: ViewMode;
+  content: ModeContentType;
   themeMode: ThemeMode;
 };
 
 function getCardWidthClass(size: "sm" | "md" | "lg" | "wide" = "md") {
   switch (size) {
     case "sm":
-      return "w-[180px]";
+      return "w-[25%]";
     case "lg":
-      return "w-[380px]";
+      return "w-[75%]";
     case "wide":
-      return "w-[450px]";
+      return "w-full xl:max-w-[450px]";
     case "md":
     default:
-      return "w-[115px]";
+      return "w-[75%] md:w-[40%] lg:w-[35%] xl:w-[48%]";
   }
 }
 
@@ -33,13 +35,13 @@ function getSegmentSizeClass(size?: RichTextSegment["size"]) {
     case "sm":
       return "text-base lg:text-lg";
     case "md":
-      return "text-[2.1rem] lg:text-xl]";
+      return "text-[2.1rem] lg:text-xl";
     case "lg":
       return "text-[2.3rem] lg:text-2xl";
     case "xl":
       return "text-[2.5rem] lg:text-3xl";
     default:
-      return "text-[2.1rem] lg:text-3xl";
+      return "text-3xl lg:text-3xl";
   }
 }
 
@@ -68,10 +70,9 @@ function renderSegment(
 }
 
 export default function ModeContent({
-  mode,
+  content,
   themeMode,
 }: ModeContentProps) {
-  const content = portfolioContent.modes[mode];
   const theme = themeTokens[themeMode];
 
   return (
@@ -79,7 +80,7 @@ export default function ModeContent({
       <div>
         <h1
           className={cn(
-            "text-6xl font-bold leading-none lg:text-7xl",
+            "text-5xl sm:text-6xl font-bold leading-none lg:text-7xl",
             theme.titleClass
           )}
         >
@@ -97,69 +98,69 @@ export default function ModeContent({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-end gap-4 ">
-      {content.leftCards.map((card, cardIndex) => {
-        const isWide = card.size === "wide";
-        const isLarge = card.size === "lg";
-        const widthClass = getCardWidthClass(card.size);
+      <div className="flex flex-wrap items-end gap-4">
+        {content.leftCards.map((card, cardIndex) => {
+          const isWide = card.size === "wide";
+          const isLarge = card.size === "lg";
+          const widthClass = getCardWidthClass(card.size);
 
-        return (
-          <div
-            key={card.id}
-            className={cn(
-              "rounded-4xl border p-5 shadow-sm backdrop-blur-sm",
-              widthClass,
-              isWide && "min-h-8",
-              isLarge && "min-h-8",
-              !isWide && !isLarge && "min-h-8",
-              theme.cardBgClass,
-              theme.cardBorderClass
-            )}
-          >
-      {card.variant === "toolGrid" ? (
-        <ToolGrid
-          tools={card.tools}
-          theme={theme}
-          showLabels={card.showLabels}
-        />
-      ) : card.variant === "toolPager" ? (
-        <ToolPagerCard
-          pages={card.pages}
-          theme={theme}
-          showLabels={card.showLabels}
-        />
-      ) : card.variant === "animatedIcon" ? (
-        <AnimatedIconCard
-          tool={card.tool}
-          theme={theme}
-          animationIndex={cardIndex}
-        />
-      ) : (
-        <div className="flex items-start gap-2">
-          {card.icon ? (
-            <div className="shrink-0 pt-0">
-              <ConfigIcon
-                icon={card.icon}
-                fallbackSize={24}
-                emojiClassName="text-3xl"
-                imageClassName="h-auto w-auto object-contain"
-              />
+          return (
+            <div
+              key={card.id}
+              className={cn(
+                "rounded-4xl border p-5 shadow-sm backdrop-blur-sm",
+                widthClass,
+                isWide && "min-h-8",
+                isLarge && "min-h-8",
+                !isWide && !isLarge && "min-h-8",
+                theme.cardBgClass,
+                theme.cardBorderClass
+              )}
+            >
+              {card.variant === "toolGrid" ? (
+                <ToolGrid
+                  tools={card.tools}
+                  theme={theme}
+                  showLabels={card.showLabels}
+                />
+              ) : card.variant === "toolPager" ? (
+                <ToolPagerCard
+                  pages={card.pages}
+                  theme={theme}
+                  showLabels={card.showLabels}
+                />
+              ) : card.variant === "animatedIcon" ? (
+                <AnimatedIconCard
+                  tool={card.tool}
+                  theme={theme}
+                  animationIndex={cardIndex}
+                />
+              ) : (
+                <div className="flex items-start gap-2">
+                  {card.icon ? (
+                    <div className="shrink-0 pt-0">
+                      <ConfigIcon
+                        icon={card.icon}
+                        fallbackSize={24}
+                        emojiClassName="text-3xl"
+                        imageClassName="h-auto w-auto object-contain"
+                      />
+                    </div>
+                  ) : null}
+
+                  <p
+                    className={cn(
+                      "whitespace-pre-line text-[1.05rem] leading-relaxed lg:text-[1.15rem]",
+                      theme.cardTextClass
+                    )}
+                  >
+                    {card.text}
+                  </p>
+                </div>
+              )}
             </div>
-          ) : null}
-
-          <p
-            className={cn(
-              "whitespace-pre-line text-[1.05rem] leading-relaxed lg:text-[1.15rem]",
-              theme.cardTextClass
-            )}
-          >
-            {card.text}
-          </p>
-        </div>
-      )}
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
 
       {content.toolsText ? (
