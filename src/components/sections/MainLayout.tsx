@@ -89,7 +89,7 @@ const currentModeContent = localizedContent.modes[mode];
                 alt="Garafly icon logo"
                 width={48}
                 height={48}
-                className="h-auto w-auto object-contain "
+                className="w-auto h-20 object-contain "
                 priority
               />
             </button>
@@ -193,7 +193,7 @@ const currentModeContent = localizedContent.modes[mode];
               alt="Garafly logo"
               width={64}
               height={8}
-              className="h-auto w-auto object-contain"
+              className="h-12 w-auto object-contain"
               priority
             />
 

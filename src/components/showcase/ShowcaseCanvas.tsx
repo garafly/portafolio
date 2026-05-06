@@ -8,6 +8,7 @@ import ShowcaseModel from "./ShowcaseModel";
 import CameraRig from "./CameraRig";
 import ShowcaseLights from "./ShowcaseLights";
 import Loader from "./Loader";
+// import { Environment } from "@react-three/drei";
 
 type ShowcaseCanvasProps = {
   mode: ViewMode;
@@ -19,12 +20,13 @@ export default function ShowcaseCanvas({
   themeMode,
 }: ShowcaseCanvasProps) {
   return (
-    <div className="relative h-105 w-full md:h-180">
+    <div className="relative h-105 w-full md:h-180 ">
       <Canvas
         camera={{ position: [0, 0.4, 4.5], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
       >
         <Suspense fallback={<Loader />}>
+         
           <CameraRig mode={mode} />
           <ShowcaseLights themeMode={themeMode} />
           <ShowcaseModel mode={mode} themeMode={themeMode} />
@@ -32,7 +34,7 @@ export default function ShowcaseCanvas({
           <OrbitControls
             enablePan={false}
             enableZoom={false}
-            enableRotate={false}
+            enableRotate={true}
           />
         </Suspense>
       </Canvas>

@@ -112,10 +112,10 @@ export default function KeyboardLightsShowcase() {
       <div className="absolute inset-0 z-20">
         <Image
           src={currentImage}
-          alt={`Keyboard lighting state ${stateKey}`}
+          alt="Keyboard lighting state"
           fill
-          className="object-cover"
-          priority
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-contain"
         />
       </div>
 

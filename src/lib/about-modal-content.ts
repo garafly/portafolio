@@ -12,7 +12,7 @@ export const aboutModalContent: Record<Locale, AboutModalContent> = {
     metaLabel: "Based in",
     location: "Santiago, Dominican Republic",
     name: "Sara García",
-    role: "Frontend Developer • UX/UI Designer • Creative Technologist",
+    role: "Frontend Developer • UX/UI Designer",
     paragraphs: [
       "I’m a naturally curious and highly driven person who enjoys turning ideas into experiences that feel polished, expressive, and well put together.",
       "I tend to thrive in projects where I can bring both visual sensitivity and technical thinking to the table, especially when the goal is to create something clear, useful, and a little unexpected.",

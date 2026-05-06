@@ -31,7 +31,7 @@ const englishContent: PortfolioContentConfig = {
           },
           {
             id: "intro-role",
-            text: "I'm a Frontend Developer & UX/UI Designer at Orkapi Technology.",
+            text: "I'm currently a Frontend Developer & UX/UI Designer at Orkapi.",
             size: "md",
           },
           {
@@ -48,7 +48,7 @@ const englishContent: PortfolioContentConfig = {
           },
           {
             id: "intro-education",
-            text: "Yes, I have a masters in Education from PUCMM.",
+            text: "Yes, I have a masters in Education from PUCMM. I'm self-taught programmer, designer and animmator.",
             icon: {
               type: "emoji",
               value: "🎓"

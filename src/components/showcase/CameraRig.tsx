@@ -22,7 +22,7 @@ const cameraTargets: Record<ViewMode, { position: [number, number, number]; look
     lookAt: [0, 0.3, 0],
   },
   animator: {
-    position: [0.85, 0.25, 4.2],
+    position: [0.5, -0.1, 4.2],
     lookAt: [0.2, 0.3, 0],
   },
 };

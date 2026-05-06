@@ -12,7 +12,7 @@ type ShowcaseModelProps = {
 };
 
 const animationByMode: Record<ViewMode, string> = {
-  intro: "Standing",
+  intro: "",
   designer: "Idle",
   programmer: "Standing",
   animator: "Running",
@@ -32,6 +32,7 @@ export default function ShowcaseModel({ mode }: ShowcaseModelProps) {
 
   const targetRotation = useMemo(() => rotationByMode[mode], [mode]);
 
+
   useEffect(() => {
     if (!actions) return;
 
@@ -39,7 +40,7 @@ export default function ShowcaseModel({ mode }: ShowcaseModelProps) {
     const nextAction = actions[nextAnimationName];
 
     if (!nextAction) {
-      console.warn(`Animation "${nextAnimationName}" not found.`);
+      // console.warn(`Animation "${nextAnimationName}" not found.`);
       return;
     }
 

@@ -6,7 +6,7 @@ import type { ThemeMode, ViewMode, Locale  } from "@/types";
 
 export default function Home() {
   const [mode, setMode] = useState<ViewMode>("intro");
-  const [themeMode, setThemeMode] = useState<ThemeMode>("light");
+  const [themeMode, setThemeMode] = useState<ThemeMode>("dark");
     const [locale, setLocale] = useState<Locale>("en");
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
