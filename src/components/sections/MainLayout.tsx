@@ -13,6 +13,7 @@ import LanguageToggle from "@/components/layout/LanguageToggle";
 import ModeContent from "@/components/modes/ModeContent";
 import RightPanel from "@/components/sections/RightPanel";
 import ShowcaseCanvas from "@/components/showcase/ShowcaseCanvas";
+import ShowcaseAnnotations from "@/components/showcase/ShowcaseAnnotations";
 import ProjectDetailView from "@/components/sections/right-panel/ProjectDetailView";
 
 import { portfolioContent } from "@/lib/content-config";
@@ -25,17 +26,27 @@ import { aboutModalContent } from "@/lib/about-modal-content";
 type MainLayoutProps = {
   mode: ViewMode;
   setMode: (mode: ViewMode) => void;
+
+  modelMode: ViewMode;
+  setModelMode: (mode: ViewMode) => void;
+
   themeMode: ThemeMode;
   setThemeMode: (theme: ThemeMode) => void;
+
   locale: Locale;
   setLocale: (locale: Locale) => void;
+
   selectedProjectId: string | null;
   setSelectedProjectId: (id: string | null) => void;
+
+
 };
 
 export default function MainLayout({
   mode,
   setMode,
+  modelMode,
+  setModelMode,
   themeMode,
   setThemeMode,
   locale,
@@ -89,7 +100,7 @@ const currentModeContent = localizedContent.modes[mode];
                 alt="Garafly icon logo"
                 width={48}
                 height={48}
-                className="w-auto h-20 object-contain "
+                className="w-auto h-18 object-contain "
                 priority
               />
             </button>
@@ -170,8 +181,9 @@ const currentModeContent = localizedContent.modes[mode];
             </section>
 
             {/* Center */}
-            <section className="min-w-0 px-4 pt-8 md:p-10 xl:p-0">
-              <ShowcaseCanvas mode={mode} themeMode={themeMode} />
+            <section className="relative min-w-0 px-4 pt-8 md:p-10 xl:p-0">
+              <ShowcaseCanvas mode={modelMode} setMode={setModelMode} themeMode={themeMode}/>
+              <ShowcaseAnnotations mode={mode} />
             </section>
 
             {/* Right */}

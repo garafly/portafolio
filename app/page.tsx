@@ -6,25 +6,29 @@ import type { ThemeMode, ViewMode, Locale  } from "@/types";
 
 export default function Home() {
   const [mode, setMode] = useState<ViewMode>("intro");
+  const [modelMode, setModelMode] = useState<ViewMode>("intro");
   const [themeMode, setThemeMode] = useState<ThemeMode>("dark");
     const [locale, setLocale] = useState<Locale>("en");
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
   const handleModeChange = (nextMode: ViewMode) => {
     setMode(nextMode);
+    setModelMode(nextMode);
     setSelectedProjectId(null);
   };
 
-  return (
-    <MainLayout
+return (
+  <MainLayout
       mode={mode}
       setMode={handleModeChange}
-      themeMode={themeMode}
-      setThemeMode={setThemeMode}
-      locale={locale}
-      setLocale={setLocale}
-      selectedProjectId={selectedProjectId}
-      setSelectedProjectId={setSelectedProjectId}
-    />
-  );
+      modelMode={modelMode}
+      setModelMode={setModelMode}
+    themeMode={themeMode}
+    setThemeMode={setThemeMode}
+    locale={locale}
+    setLocale={setLocale}
+    selectedProjectId={selectedProjectId}
+    setSelectedProjectId={setSelectedProjectId}
+  />
+);
 }
