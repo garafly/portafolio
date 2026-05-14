@@ -444,6 +444,11 @@ const englishContent: PortfolioContentConfig = {
           ],
           },
           {
+          id: "reusable-ui",
+          text: "Animations, transitions, 3D integrations, playful UI, game-like interactions.",
+          size: "md",
+          },
+          {
           id: "programmer-focus",
           title:"Frontend Interfaces",
           text: "Responsive Pages • Dashboards • Landing Pages • Marketing Sites • App Screens.",

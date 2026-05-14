@@ -2,6 +2,7 @@ import type { ThemeMode } from "@/types";
 import type { ModeContent as ModeContentType } from "@/types/content-config";
 import RightPanelProfile from "./right-panel/RightPanelProfile";
 import RightPanelShowcaseList from "./right-panel/RightPanelShowcaseList";
+import { div } from "framer-motion/client";
 
 type RightPanelProps = {
   content: ModeContentType;
@@ -17,11 +18,14 @@ export default function RightPanel({
   switch (content.rightPanelVariant) {
     case "showcaseList":
       return (
-        <RightPanelShowcaseList
-          content={content}
-          themeMode={themeMode}
-          setSelectedProjectId={setSelectedProjectId}
-        />
+        <div className="w-full flex justify-center">
+          <RightPanelShowcaseList
+            content={content}
+            themeMode={themeMode}
+            setSelectedProjectId={setSelectedProjectId}
+          />
+        </div>
+
       );
 
     case "profile":

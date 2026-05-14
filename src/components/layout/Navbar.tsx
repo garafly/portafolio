@@ -21,7 +21,7 @@ export default function Navbar({
   const theme = themeTokens[themeMode];
 
   return (
-    <nav className="flex items-center justify-center">
+    <nav className="flex items-center justify-center ">
       <div className="flex flex-wrap items-center gap-8 px-5 py-4">
         {navItems.map((item) => {
           const isActive = mode === item.value;

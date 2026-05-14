@@ -11,7 +11,7 @@ export default function ShowcaseLights({ themeMode }: ShowcaseLightsProps) {
 
   return (
     <>
-      <ambientLight color={isDark ? "#d7e8fc" : "#fffdde"} intensity={isDark ? 2 : 2.1} />
+      <ambientLight color={isDark ? "#fce6ca" : "#fce3ca"} intensity={isDark ? 2 : 1.9} />
       <pointLight
         position={[3, 6, 0]}
         intensity={isDark ? 100 : 80}

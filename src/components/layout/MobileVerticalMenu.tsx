@@ -4,12 +4,13 @@ import React from "react";
 import { UserRound, Mail } from "lucide-react";
 import { FaInstagram, FaBehance, FaLinkedin, FaGithub } from "react-icons/fa";
 import { SiThreads } from "react-icons/si";
+
 import { verticalMenuItems } from "@/lib/navigation-config";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
 import type { ThemeMode, ViewMode, VerticalMenuItem } from "@/types";
 
-type VerticalMenuProps = {
+type MobileVerticalMenuProps = {
   themeMode: ThemeMode;
   setMode: (mode: ViewMode) => void;
   onOpenAboutModal: () => void;
@@ -54,7 +55,7 @@ function IconContent({
     if (!Icon) return null;
 
     return React.createElement(Icon, {
-      size: 40,
+      size: 24,
       strokeWidth: 1.8,
       className,
     });
@@ -64,19 +65,21 @@ function IconContent({
   if (!Icon) return null;
 
   return React.createElement(Icon, {
-    className: cn("h-9 w-9", className),
+    className: cn("h-5 w-5", className),
   });
 }
 
-export default function VerticalMenu({
+export default function MobileVerticalMenu({
   themeMode,
   setMode,
   onOpenAboutModal,
-}: VerticalMenuProps) {
+}: MobileVerticalMenuProps) {
   const theme = themeTokens[themeMode];
 
   const baseItemClass = cn(
-    "flex h-8 w-8 lg:h-11 lg:w-11  items-center justify-center transition-transform duration-200 hover:scale-110",
+    "flex h-10 w-10 shrink-0 items-center justify-center rounded-full",
+    "transition-transform duration-200 active:scale-95",
+    "border border-white/10 bg-white/5 backdrop-blur-md",
     theme.logoClass
   );
 
@@ -92,8 +95,13 @@ export default function VerticalMenu({
   }
 
   return (
-    <div className="flex w-full flex-col items-center py-6 mt-6">
-      <div className="flex flex-col items-center gap-7">
+    <div className="md:hidden">
+      <div
+        className={cn(
+          "mx-auto flex w-full max-w-[370px] items-center justify-center gap-3 rounded-full px-3 py-2",
+          "border border-white/80 bg-white/10 shadow-sm backdrop-blur-md"
+        )}
+      >
         {verticalMenuItems.map((item) => {
           if (item.type === "external" || item.type === "email") {
             const href = getItemHref(item);
@@ -128,8 +136,6 @@ export default function VerticalMenu({
           );
         })}
       </div>
-
-      <div className={cn("mt-10 h-full w-px", theme.dividerClass)} />
     </div>
   );
 }

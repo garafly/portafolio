@@ -22,7 +22,7 @@ export default function LanguageToggle({
   return (
     <div
       className={cn(
-        "fixed bottom-5 right-5 z-40 flex items-center gap-1 rounded border p-1 shadow-lg backdrop-blur-md",
+        "fixed bottom-2 right-1 md:bottom-5 md:right-5 z-40 flex items-center gap-1 rounded border p-1 shadow-lg backdrop-blur-md",
         theme.panelBgClass,
         theme.cardBorderClass
       )}

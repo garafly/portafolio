@@ -15,6 +15,7 @@ import RightPanel from "@/components/sections/RightPanel";
 import ShowcaseCanvas from "@/components/showcase/ShowcaseCanvas";
 import ShowcaseAnnotations from "@/components/showcase/ShowcaseAnnotations";
 import ProjectDetailView from "@/components/sections/right-panel/ProjectDetailView";
+import MobileVerticalMenu from "@/components/layout/MobileVerticalMenu";
 
 import { portfolioContent } from "@/lib/content-config";
 import { themeTokens } from "@/lib/theme-config";
@@ -38,8 +39,6 @@ type MainLayoutProps = {
 
   selectedProjectId: string | null;
   setSelectedProjectId: (id: string | null) => void;
-
-
 };
 
 export default function MainLayout({
@@ -56,16 +55,16 @@ export default function MainLayout({
 }: MainLayoutProps) {
   const theme = themeTokens[themeMode];
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
   const localizedAboutContent = aboutModalContent[locale];
 
   const logoIconSrc =
     themeMode === "dark" ? "/logo_icon_dark.png" : "/logo_icon.png";
 
-  const logoSrc =
-    themeMode === "dark" ? "/logo_dark.png" : "/logo.png";
+  const logoSrc = themeMode === "dark" ? "/logo_dark.png" : "/logo.png";
 
   const localizedContent = portfolioContent[locale];
-const currentModeContent = localizedContent.modes[mode];
+  const currentModeContent = localizedContent.modes[mode];
 
   const selectedProject =
     selectedProjectId && currentModeContent.workItems
@@ -92,7 +91,7 @@ const currentModeContent = localizedContent.modes[mode];
                 setMode("intro");
                 setSelectedProjectId(null);
               }}
-              className="flex h-24 w-24 shrink-0 items-center  md:pr-2 md:justify-end"
+              className="flex h-auto w-20 shrink-0 items-center md:justify-center"
               aria-label="Go to intro"
             >
               <Image
@@ -100,7 +99,7 @@ const currentModeContent = localizedContent.modes[mode];
                 alt="Garafly icon logo"
                 width={48}
                 height={48}
-                className="w-auto h-18 object-contain "
+                className="h-18 w-auto object-contain"
                 priority
               />
             </button>
@@ -137,7 +136,7 @@ const currentModeContent = localizedContent.modes[mode];
 
         {/* PROJECT DETAIL MODE */}
         {selectedProject ? (
-          <div className="grid flex-1 grid-cols-1 gap-10 xl:grid-cols-[120px_minmax(0,1fr)]">
+          <div className="grid flex-1 justify-end  grid-cols-1 gap-0 xl:grid-cols-[80px_minmax(0,1fr)]">
             <aside className="hidden xl:flex">
               <VerticalMenu
                 themeMode={themeMode}
@@ -149,7 +148,7 @@ const currentModeContent = localizedContent.modes[mode];
               />
             </aside>
 
-            <section className="pt-6">
+            <section className="min-w-0 pt-6">
               <ProjectDetailView
                 project={selectedProject}
                 themeMode={themeMode}
@@ -159,9 +158,15 @@ const currentModeContent = localizedContent.modes[mode];
           </div>
         ) : (
           /* NORMAL MODE */
-          <div className="grid flex-1 grid-cols-1 gap-10 md:w-[90%] xl:w-full xl:grid-cols-[120px_minmax(340px,1fr)_minmax(420px,560px)_minmax(360px,1fr)]">
+          <div
+            className="
+              grid flex-1 md:gap-8 lg:gap:16 2xl:gap-20
+              md:grid-cols-[70px_minmax(0,1fr)]
+             lg:grid-cols-[70px_minmax(0,1fr)]
+            "
+          >
             {/* Vertical Menu */}
-            <aside className="hidden xl:flex">
+            <aside className="hidden md:flex">
               <VerticalMenu
                 themeMode={themeMode}
                 setMode={(nextMode) => {
@@ -172,33 +177,111 @@ const currentModeContent = localizedContent.modes[mode];
               />
             </aside>
 
-            {/* Left */}
-            <section className="min-w-0 px-4 pt-4 md:px-10 xl:px-0">
-              <ModeContent
-                content={currentModeContent}
-                themeMode={themeMode}
-              />
-            </section>
+            {/* Main responsive content area */}
+            <div
+              className="
+                grid min-w-0 flex-1 grid-cols-1 gap-8
 
-            {/* Center */}
-            <section className="relative min-w-0 px-4 pt-8 md:p-10 xl:p-0">
-              <ShowcaseCanvas mode={modelMode} setMode={setModelMode} themeMode={themeMode}/>
-              <ShowcaseAnnotations mode={mode} />
-            </section>
+                lg:mx-auto
+                lg:w-full
+                lg:max-w-[900px]
+                lg:grid-cols-[minmax(300px,400px)_minmax(400px,560px)]
+                lg:justify-center
+                lg:gap-6
 
-            {/* Right */}
-            <section className="min-w-0 p-8 px-4 md:p-10 xl:p-0">
-              <RightPanel
-                content={currentModeContent}
-                themeMode={themeMode}
-                setSelectedProjectId={setSelectedProjectId}
-              />
-            </section>
+                xl:max-w-[1120px]
+                xl:grid-cols-[minmax(480px,520px)_minmax(560px,700px)]
+                xl:gap-10
+
+                2xl:max-w-none
+                2xl:grid-cols-[minmax(260px,0.75fr)_minmax(480px,560px)_minmax(320px,0.85fr)]
+                2xl:justify-stretch
+                2xl:gap-0
+              "
+            >
+              {/* Left */}
+              <section
+                className="
+                  min-w-0 px-4 pt-4
+                  md:px-0 md:pt-6
+                  lg:p-0
+                "
+              >
+                <ModeContent
+                  content={currentModeContent}
+                  themeMode={themeMode}
+                />
+              </section>
+
+              {/* Center */}
+              <section
+                className="
+                  relative min-w-0 overflow-visible px-4 pt-8
+                  md:px-0 md:pt-4
+                  lg:p-0
+                  2xl:p-0
+                "
+              >
+                <div
+                  className="
+                    relative mx-auto w-full overflow-visible
+                    max-w-[430px]
+                    sm:max-w-[520px]
+
+                    lg:max-w-[560px]
+                    xl:max-w-[700px]
+
+                    2xl:max-w-none
+                  "
+                >
+                  <ShowcaseCanvas
+                    mode={modelMode}
+                    setMode={setModelMode}
+                    themeMode={themeMode}
+                  />
+
+                  <ShowcaseAnnotations mode={mode} modelMode={modelMode} themeMode={themeMode}/>
+                </div>
+              </section>
+
+              {/* Right */}
+              <section
+                className="
+                  min-w-0 px-4 pt-8
+
+                  lg:col-span-2
+                  lg:px-0
+                  lg:pt-10
+
+                  2xl:col-span-1
+                  2xl:p-0
+                "
+              >
+                <RightPanel
+                  content={currentModeContent}
+                  themeMode={themeMode}
+                  setSelectedProjectId={setSelectedProjectId}
+                />
+              </section>
+            </div>
           </div>
         )}
 
+                  {/* Mobile Vertical Menu / Social Dock */}
+        <div className="mt-4 md:hidden">
+          <MobileVerticalMenu
+            themeMode={themeMode}
+            setMode={(nextMode) => {
+              setMode(nextMode);
+              setSelectedProjectId(null);
+            }}
+            onOpenAboutModal={() => setIsAboutModalOpen(true)}
+          />
+        </div>
+
         {/* FOOTER */}
-        <footer className="mt-10 flex justify-center">
+        <footer className=" mt-20 md:mt-10 flex justify-center">
+  
           <div className="flex items-center gap-1">
             <Image
               src={logoSrc}

@@ -6,7 +6,6 @@ import { OrbitControls } from "@react-three/drei";
 import type { ThemeMode, ViewMode } from "@/types";
 import ShowcaseModel from "./ShowcaseModel";
 import ShowcasePlatform from "./ShowcasePlatform";
-
 import ModeDots from "./ModeDots";
 import CameraRig from "./CameraRig";
 import ShowcaseLights from "./ShowcaseLights";
@@ -24,7 +23,24 @@ export default function ShowcaseCanvas({
   themeMode,
 }: ShowcaseCanvasProps) {
   return (
-    <div className="relative h-105 w-full md:h-180">
+<div
+  className="
+    relative mx-auto aspect-[4/5] w-full overflow-visible
+    max-w-[430px]
+    sm:max-w-[520px]
+
+    lg:h-[560px]
+    lg:max-w-[560px]
+    lg:aspect-auto
+
+    xl:h-[620px]
+    xl:max-w-[700px]
+
+    2xl:h-180
+    2xl:max-w-none
+  "
+>
+    
       <Canvas
         camera={{ position: [0, 0.4, 4.5], fov: 35 }}
         gl={{ antialias: true, alpha: true }}

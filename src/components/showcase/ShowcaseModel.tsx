@@ -27,7 +27,7 @@ const rotationByMode: Record<ViewMode, [number, number, number]> = {
 
 export default function ShowcaseModel({ mode }: ShowcaseModelProps) {
   const group = useRef<Group>(null);
-  const { scene, animations } = useGLTF("/models/experience-chick.glb");
+  const { scene, animations } = useGLTF("/models/experience-chick-backup.glb");
   const { actions } = useAnimations(animations, group);
 
   const targetRotation = useMemo(() => rotationByMode[mode], [mode]);
@@ -65,7 +65,7 @@ export default function ShowcaseModel({ mode }: ShowcaseModelProps) {
   });
 
   return (
-    <group ref={group} position={[0, 0.4, 0]} scale={2.2}>
+    <group ref={group} position={[0, 0.4, 0]} scale={2}>
       <primitive object={scene} />
     </group>
   );

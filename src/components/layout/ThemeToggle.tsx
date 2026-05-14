@@ -32,9 +32,27 @@ export default function ThemeToggle({
           isDark ? "translate-x-7" : "translate-x-0"
         )}
       />
+
       <span className="relative z-10 flex w-full items-center justify-between px-1 text-xl">
-        <span>{isDark ? "☾" : "☾"}</span>
-        <span>{isDark ? "☀" : "☀"}</span>
+        {/* Moon */}
+        <span
+          className={cn(
+            "transition-colors duration-300",
+            isDark ? "text-sky-300" : "text-slate-400"
+          )}
+        >
+          ☾
+        </span>
+
+        {/* Sun */}
+        <span
+          className={cn(
+            "transition-colors duration-300",
+            isDark ? "text-slate-400" : "text-[#ffba72]"
+          )}
+        >
+          ☀
+        </span>
       </span>
     </button>
   );
