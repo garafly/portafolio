@@ -661,7 +661,7 @@ const englishContent: PortfolioContentConfig = {
           {
               id: "primera-lotto-draw-3",
               type: "video",
-              src: "/videos/animator/lotto-draw-demo.mp4",
+              src: "/images/animator-projects/primerita_sample.mp4",
               title: "Lotto Draw for Lottery Game demo video",
               poster: "/images/animator-projects/primera-gallery-3.png",
           },

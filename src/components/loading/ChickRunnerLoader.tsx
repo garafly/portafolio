@@ -92,8 +92,8 @@ export default function ChickRunnerLoader({
 
                 <h2
                   className={cn(
-                    "mt-1 text-2xl font-bold leading-tight sm:text-3xl",
-                    theme.titleClass
+                    "mt-1 text-2xl font-bold leading-tight sm:text-3xl text-[#acdffa]",
+                    
                   )}
                 >
                   Have a chicken run while you wait!

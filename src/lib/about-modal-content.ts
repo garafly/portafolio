@@ -91,13 +91,6 @@ export const aboutModalContent: Record<Locale, AboutModalContent> = {
         variant: "primary",
       },
       {
-        id: "experience-cv",
-        label: "Experimenta mi CV",
-        type: "link",
-        href: "/experience-cv",
-        variant: "secondary",
-      },
-      {
         id: "email",
         label: "Escríbeme",
         type: "email",
