@@ -35,7 +35,7 @@ export default function ModeDots({ mode, setMode }: ModeDotsProps) {
               !isActive && "animate-[dotBreathe_2.8s_ease-in-out_infinite]"
             )}
             style={{
-              animationDelay: isActive ? "0s" : `${index * 0.22}s`,
+              animationDelay: isActive ? "0s" : `${index * 0.2}s`,
             }}
           >
             {/* soft active halo */}
@@ -55,18 +55,6 @@ export default function ModeDots({ mode, setMode }: ModeDotsProps) {
                   : "bg-[#9DB0C8] group-hover:bg-[#6F95C4]"
               )}
             />
-
-            {/* tiny hover label */}
-            <span
-              className={cn(
-                "pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-full px-2 py-1",
-                "text-[0.65rem] font-medium tracking-wide opacity-0 shadow-sm backdrop-blur-md",
-                "transition-all duration-200 group-hover:-top-9 group-hover:opacity-100",
-                "bg-black/30 text-[#86C7FF]"
-              )}
-            >
-              {item.label}
-            </span>
           </button>
         );
       })}

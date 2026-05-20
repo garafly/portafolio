@@ -3,6 +3,7 @@
 import type { ViewMode, ThemeMode } from "@/types";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 type AnnotationItem = {
   label: string;
@@ -18,9 +19,10 @@ type AnnotationAdjustment = {
 };
 
 type ShowcaseAnnotationsProps = {
-  mode: ViewMode; // page/content mode
-  modelMode?: ViewMode; // chick/model mode, optional
+  mode: ViewMode;
+  modelMode?: ViewMode;
   themeMode: ThemeMode;
+  isShowcaseReady?: boolean;
 };
 
 const annotationsByMode: Record<ViewMode, AnnotationItem[]> = {
@@ -864,6 +866,7 @@ export default function ShowcaseAnnotations({
   mode,
   modelMode,
   themeMode,
+  isShowcaseReady = true,
 }: ShowcaseAnnotationsProps) {
   const desktopAnnotations = annotationsByMode[mode];
   const largeAnnotations = largeAnnotationsByMode[mode];
@@ -871,6 +874,20 @@ export default function ShowcaseAnnotations({
   const theme = themeTokens[themeMode];
 
   const activeModelMode = modelMode ?? mode;
+
+  const [shouldShowAnnotations, setShouldShowAnnotations] = useState(false);
+
+  useEffect(() => {
+    const delay = isShowcaseReady ? 240 : 0;
+
+    const timer = window.setTimeout(() => {
+      setShouldShowAnnotations(isShowcaseReady);
+    }, delay);
+
+    return () => window.clearTimeout(timer);
+  }, [isShowcaseReady, mode, activeModelMode]);
+
+  if (!shouldShowAnnotations) return null;
 
   return (
     <>
@@ -882,7 +899,7 @@ export default function ShowcaseAnnotations({
 
           return (
             <AnnotationLabel
-              key={item.label}
+              key={`${mode}-${activeModelMode}-${item.label}`}
               item={item}
               labelClassName={adjustment?.labelClassName}
               connectorClassName={adjustment?.connectorClassName}
@@ -902,7 +919,7 @@ export default function ShowcaseAnnotations({
 
           return (
             <AnnotationLabel
-              key={item.label}
+              key={`${mode}-${activeModelMode}-${item.label}`}
               item={item}
               labelClassName={adjustment?.labelClassName}
               connectorClassName={adjustment?.connectorClassName}
@@ -922,7 +939,7 @@ export default function ShowcaseAnnotations({
 
           return (
             <AnnotationLabel
-              key={item.label}
+              key={`${mode}-${activeModelMode}-${item.label}`}
               item={item}
               labelClassName={adjustment?.labelClassName}
               connectorClassName={adjustment?.connectorClassName}
@@ -933,6 +950,59 @@ export default function ShowcaseAnnotations({
           );
         })}
       </div>
+
+      <style jsx global>{`
+        @keyframes annotationLineDraw {
+            0% {
+            transform: scaleX(0);
+            opacity: 0;
+            }
+
+            100% {
+            transform: scaleX(1);
+            opacity: 1;
+            }
+        }
+
+        @keyframes annotationDotSoftIn {
+            0% {
+            transform: scale(0.72);
+            opacity: 0;
+            }
+
+            100% {
+            transform: scale(1);
+            opacity: 1;
+            }
+        }
+
+        @keyframes annotationLabelSoftIn {
+            0% {
+            transform: translateY(4px);
+            opacity: 0;
+            }
+
+            100% {
+            transform: translateY(0);
+            opacity: 1;
+            }
+        }
+
+        .annotation-line-draw {
+            animation: annotationLineDraw 720ms cubic-bezier(0.22, 1, 0.36, 1)
+            120ms both;
+        }
+
+        .annotation-dot-soft-in {
+            animation: annotationDotSoftIn 520ms cubic-bezier(0.22, 1, 0.36, 1)
+            both;
+        }
+
+        .annotation-label-soft-in {
+            animation: annotationLabelSoftIn 560ms cubic-bezier(0.22, 1, 0.36, 1)
+            180ms both;
+        }
+        `}</style>
     </>
   );
 }
@@ -959,7 +1029,7 @@ function AnnotationLabel({
   const dot = (
     <span
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full border-2 border-[#4CA7FF]/50 bg-white/10 backdrop-blur-sm",
+        "annotation-dot-soft-in flex shrink-0 items-center justify-center rounded-full border-2 border-current bg-white/10 backdrop-blur-sm transition-colors duration-300",
         isCompact && "h-5 w-5",
         isLarge && "h-6 w-6 xl:h-7 xl:w-7",
         isDesktop && "h-7 w-7"
@@ -967,7 +1037,7 @@ function AnnotationLabel({
     >
       <span
         className={cn(
-          "rounded-full bg-[#4CA7FF]",
+          "rounded-full bg-current transition-colors duration-300",
           isCompact && "h-2 w-2",
           isLarge && "h-2.5 w-2.5 xl:h-3 xl:w-3",
           isDesktop && "h-3 w-3"
@@ -979,25 +1049,25 @@ function AnnotationLabel({
   const line = (
     <span
       className={cn(
-        "block h-px bg-[#4CA7FF]/80 transition-all duration-500 ease-out",
+        "annotation-line-draw block h-px bg-current opacity-80 transition-all duration-500 ease-out",
+        item.dotSide === "right" ? "origin-right" : "origin-left",
         lineClassName ?? item.lineClassName ?? "w-16"
       )}
     />
   );
 
-const label = (
-  <span
-    className={cn(
-      "whitespace-nowrap font-medium tracking-wide transition-colors duration-300",
-      titleClassName,
-      isCompact && "text-sm",
-      isLarge && "text-lg xl:text-xl",
-      isDesktop && "text-2xl"
-    )}
-  >
-    {item.label}
-  </span>
-);
+  const label = (
+    <span
+      className={cn(
+        "annotation-label-soft-in whitespace-nowrap font-medium tracking-wide transition-colors duration-300",
+        isCompact && "text-sm",
+        isLarge && "text-lg xl:text-xl",
+        isDesktop && "text-2xl"
+      )}
+    >
+      {item.label}
+    </span>
+  );
 
   const connector =
     item.dotSide === "right" ? (
@@ -1025,7 +1095,8 @@ const label = (
   return (
     <div
       className={cn(
-        "absolute flex items-center transition-transform duration-500 ease-out",
+        "absolute flex items-center transition-[transform,color] duration-500 ease-out",
+        titleClassName,
         item.containerClassName,
         labelClassName
       )}

@@ -5,7 +5,7 @@ export const themeTokens: Record<ThemeMode, ThemeTokens> = {
   light: {
     mode: "light",
     pageBackgroundClass:
-      "bg-[linear-gradient(to_right,_#dfe6f2_0%,_#e6e8ec_72%,_#eee7de_92%,_#f4ecdf_100%)]",
+      "bg-[linear-gradient(to_right,_#dfe6f2_0%,_#e6e8ec_52%,_#eee7de_92%,_#f4ecdf_100%)] md:bg-[linear-gradient(to_right,_#dfe6f2_0%,_#e6e8ec_72%,_#eee7de_92%,_#f4ecdf_100%)]",
     navTextClass: "text-[#8f9fb4]",
     navActiveClass: "text-[#1266d4]",
     titleClass: "text-[#3d5a7d]",

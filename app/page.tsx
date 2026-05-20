@@ -19,10 +19,10 @@ export default function Home() {
 
 return (
   <MainLayout
-      mode={mode}
-      setMode={handleModeChange}
-      modelMode={modelMode}
-      setModelMode={setModelMode}
+    mode={mode}
+    setMode={handleModeChange}
+    modelMode={modelMode}
+    setModelMode={setModelMode}
     themeMode={themeMode}
     setThemeMode={setThemeMode}
     locale={locale}

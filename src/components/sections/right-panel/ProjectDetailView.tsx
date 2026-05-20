@@ -49,7 +49,7 @@ export default function ProjectDetailView({
   const theme = themeTokens[themeMode];
 
   return (
-    <div className="grid gap-8 xl:grid-cols-[1fr_420px] ">
+    <div className="grid gap-8 md:ml-5 lg:ml-20 xl:grid-cols-[1fr_420px] ">
       <div>
         <button
           type="button"
@@ -66,7 +66,7 @@ export default function ProjectDetailView({
           {project.title}
         </h2>
 
-        <div className="mt-6 space-y-6 max-w-3xl">
+        <div className="mt-6 space-y-6 max-w-4xl">
           <p
             className={cn(
               "text-base leading-relaxed md:text-[1.35rem] md:leading-[1.8]",

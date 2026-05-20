@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useProgress } from "@react-three/drei";
+import { useEffect, useState } from "react";
+import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 
 import Navbar from "@/components/layout/Navbar";
@@ -20,6 +22,8 @@ import MobileVerticalMenu from "@/components/layout/MobileVerticalMenu";
 import { portfolioContent } from "@/lib/content-config";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
+
+import ChickRunnerLoader from "@/components/loading/ChickRunnerLoader";
 
 import type { ThemeMode, ViewMode, Locale } from "@/types";
 import { aboutModalContent } from "@/lib/about-modal-content";
@@ -41,6 +45,24 @@ type MainLayoutProps = {
   setSelectedProjectId: (id: string | null) => void;
 };
 
+const contentColumnReveal: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+    filter: "blur(2px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      delay: 0.2,
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 export default function MainLayout({
   mode,
   setMode,
@@ -53,6 +75,33 @@ export default function MainLayout({
   selectedProjectId,
   setSelectedProjectId,
 }: MainLayoutProps) {
+const { active, progress } = useProgress();
+
+const [isShowcaseReady, setIsShowcaseReady] = useState(false);
+const [minimumLoaderPassed, setMinimumLoaderPassed] = useState(false);
+
+useEffect(() => {
+  const timer = window.setTimeout(() => {
+    setMinimumLoaderPassed(true);
+  }, 1800);
+
+  return () => window.clearTimeout(timer);
+}, []);
+
+useEffect(() => {
+  const timer = window.setTimeout(
+    () => {
+      setIsShowcaseReady(!active && minimumLoaderPassed);
+    },
+    active ? 0 : 350
+  );
+
+  return () => window.clearTimeout(timer);
+}, [active, minimumLoaderPassed]);
+
+
+
+
   const theme = themeTokens[themeMode];
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
@@ -136,7 +185,7 @@ export default function MainLayout({
 
         {/* PROJECT DETAIL MODE */}
         {selectedProject ? (
-          <div className="grid flex-1 justify-end  grid-cols-1 gap-0 xl:grid-cols-[80px_minmax(0,1fr)]">
+          <div className="grid flex-1 grid-cols-1 justify-end gap-0 xl:grid-cols-[80px_minmax(0,1fr)]">
             <aside className="hidden xl:flex">
               <VerticalMenu
                 themeMode={themeMode}
@@ -160,9 +209,9 @@ export default function MainLayout({
           /* NORMAL MODE */
           <div
             className="
-              grid flex-1 md:gap-8 lg:gap:16 2xl:gap-20
+              grid flex-1 md:gap-8 lg:gap-16 2xl:gap-20
               md:grid-cols-[70px_minmax(0,1fr)]
-             lg:grid-cols-[70px_minmax(0,1fr)]
+              lg:grid-cols-[70px_minmax(0,1fr)]
             "
           >
             {/* Vertical Menu */}
@@ -207,10 +256,16 @@ export default function MainLayout({
                   lg:p-0
                 "
               >
-                <ModeContent
-                  content={currentModeContent}
-                  themeMode={themeMode}
-                />
+                <motion.div
+                  variants={contentColumnReveal}
+                  initial="hidden"
+                  animate={isShowcaseReady ? "visible" : "hidden"}
+                >
+                  <ModeContent
+                    content={currentModeContent}
+                    themeMode={themeMode}
+                  />
+                </motion.div>
               </section>
 
               {/* Center */}
@@ -238,9 +293,15 @@ export default function MainLayout({
                     mode={modelMode}
                     setMode={setModelMode}
                     themeMode={themeMode}
+                    isShowcaseReady={isShowcaseReady}
                   />
 
-                  <ShowcaseAnnotations mode={mode} modelMode={modelMode} themeMode={themeMode}/>
+                  <ShowcaseAnnotations
+                    mode={mode}
+                    modelMode={modelMode}
+                    themeMode={themeMode}
+                    isShowcaseReady={isShowcaseReady}
+                  />
                 </div>
               </section>
 
@@ -257,17 +318,23 @@ export default function MainLayout({
                   2xl:p-0
                 "
               >
-                <RightPanel
-                  content={currentModeContent}
-                  themeMode={themeMode}
-                  setSelectedProjectId={setSelectedProjectId}
-                />
+                <motion.div
+                  variants={contentColumnReveal}
+                  initial="hidden"
+                  animate={isShowcaseReady ? "visible" : "hidden"}
+                >
+                  <RightPanel
+                    content={currentModeContent}
+                    themeMode={themeMode}
+                    setSelectedProjectId={setSelectedProjectId}
+                  />
+                </motion.div>
               </section>
             </div>
           </div>
         )}
 
-                  {/* Mobile Vertical Menu / Social Dock */}
+        {/* Mobile Vertical Menu / Social Dock */}
         <div className="mt-4 md:hidden">
           <MobileVerticalMenu
             themeMode={themeMode}
@@ -280,8 +347,7 @@ export default function MainLayout({
         </div>
 
         {/* FOOTER */}
-        <footer className=" mt-20 md:mt-10 flex justify-center">
-  
+        <footer className="mt-20 flex justify-center md:mt-10">
           <div className="flex items-center gap-1">
             <Image
               src={logoSrc}
@@ -298,6 +364,12 @@ export default function MainLayout({
           </div>
         </footer>
       </div>
+
+      <ChickRunnerLoader
+        isVisible={!isShowcaseReady}
+        progress={progress}
+        themeMode={themeMode}
+      />
 
       <LanguageToggle
         locale={locale}

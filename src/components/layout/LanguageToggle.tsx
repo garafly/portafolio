@@ -10,8 +10,6 @@ type LanguageToggleProps = {
   themeMode: ThemeMode;
 };
 
-const languages: Locale[] = ["en", "es"];
-
 export default function LanguageToggle({
   locale,
   setLocale,
@@ -19,34 +17,45 @@ export default function LanguageToggle({
 }: LanguageToggleProps) {
   const theme = themeTokens[themeMode];
 
+  const isEnglish = locale === "en";
+
   return (
     <div
-      className={cn(
-        "fixed bottom-2 right-1 md:bottom-5 md:right-5 z-40 flex items-center gap-1 rounded border p-1 shadow-lg backdrop-blur-md",
-        theme.panelBgClass,
-        theme.cardBorderClass
-      )}
+      className="
+        fixed bottom-5 right-5 z-50
+        flex items-center gap-1 rounded-lg border p-1
+        shadow-lg backdrop-blur-md
+        border-white
+      "
+      aria-label="Language selector"
     >
-      {languages.map((lang) => {
-        const isActive = locale === lang;
+      <button
+        type="button"
+        onClick={() => setLocale("en")}
+        aria-pressed={isEnglish}
+        className={cn(
+          "rounded-md px-3 py-2 text-sm font-bold transition-all duration-200",
+          isEnglish
+            ? "bg-white text-[#1F66C1] shadow-sm"
+            : cn("opacity-70 hover:opacity-100", theme.softTextClass)
+        )}
+      >
+        EN
+      </button>
 
-        return (
-          <button
-            key={lang}
-            type="button"
-            onClick={() => setLocale(lang)}
-            aria-pressed={isActive}
-            className={cn(
-              "px-2 py-1 text-sm font-semibold uppercase tracking-wide transition-all duration-200",
-              isActive
-                ? cn(theme.accentTextClass, "bg-white/80 dark:bg-white/15")
-                : cn(theme.navTextClass, "hover:opacity-80")
-            )}
-          >
-            {lang}
-          </button>
-        );
-      })}
+      <button
+        type="button"
+        onClick={() => setLocale("es")}
+        aria-pressed={!isEnglish}
+        className={cn(
+          "rounded-md px-3 py-2 text-sm font-bold transition-all duration-200",
+          !isEnglish
+            ? "bg-white text-[#1F66C1] shadow-sm"
+            : cn("opacity-70 hover:opacity-100", theme.softTextClass)
+        )}
+      >
+        ES
+      </button>
     </div>
   );
 }

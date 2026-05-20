@@ -98,7 +98,7 @@ export default function MobileVerticalMenu({
     <div className="md:hidden">
       <div
         className={cn(
-          "mx-auto flex w-full max-w-[370px] items-center justify-center gap-3 rounded-full px-3 py-2",
+          "mx-auto flex w-full max-w-[370px] items-center justify-center gap-3 rounded-full px-3 py-2 mt-10",
           "border border-white/80 bg-white/10 shadow-sm backdrop-blur-md"
         )}
       >

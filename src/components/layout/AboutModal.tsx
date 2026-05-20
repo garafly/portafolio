@@ -106,11 +106,10 @@ export default function AboutModal({
                  * --------------------------------------------------
                  * sticky keeps the close button accessible while scrolling.
                  */
-                "absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border text-2xl leading-none transition hover:scale-105 md:right-5 md:top-5 md:h-10 md:w-10",
+                "absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border text-LG leading-none transition hover:scale-105 md:right-5 md:top-5 md:h-10 md:w-10",
                 theme.modalCloseButtonClass
               )}
-            >
-              ×
+            >X
             </button>
 
             {/**

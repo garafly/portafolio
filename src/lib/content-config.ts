@@ -822,7 +822,7 @@ const spanishContent: PortfolioContentConfig = {
       leftCards: [
         {
           id: "intro-main",
-          text: "Soy programadora frontend con una inclinación natural hacia el diseño y varios sombreros bien puestos. Desde UX/UI, hasta diseño gráfico e incluso animación y modelado 3D.",
+          text: "Soy programadora frontend con una inclinación natural hacia el diseño y varios sombreros bien puestos. Desde UX/UI, hasta animación y modelado 3D.",
           size: "wide",
         },
         {
@@ -1069,7 +1069,7 @@ const spanishContent: PortfolioContentConfig = {
           case "lotto-draw-lottery-game-animation":
             return {
               ...item,
-              title: "Sorteo Lotto para Juego de Lotería",
+              title: "Sorteo  para Juego de Lotería",
               summary:
                 "Este proyecto de animación fue creado para simular la emoción y energía visual de un sorteo dentro de una experiencia digital de juego.",
               involvement:
@@ -1101,7 +1101,7 @@ const spanishContent: PortfolioContentConfig = {
           case "lotto-draw-lottery-game-animation-2":
             return {
               ...item,
-              title: "Sorteo Lotto para Juego de Lotería",
+              title: "Sorteo para Juego de Lotería",
               summary:
                 "Este proyecto de animación fue creado para simular la emoción y energía visual de un sorteo dentro de una experiencia digital de juego.",
               involvement:
@@ -1133,7 +1133,7 @@ const spanishContent: PortfolioContentConfig = {
           case "lotto-draw-lottery-game-animation-4":
             return {
               ...item,
-              title: "Sorteo Lotto para Juego de Lotería",
+              title: "Sorteo para Juego de Lotería",
               summary:
                 "Este proyecto de animación fue creado para simular la emoción y energía visual de un sorteo dentro de una experiencia digital de juego.",
               involvement:
@@ -1154,7 +1154,7 @@ const spanishContent: PortfolioContentConfig = {
   },
 };
 
-export const portfolioContent = {
+export const portfolioContent: Record<Locale, PortfolioContentConfig> = {
   en: englishContent,
-  es: englishContent,
+  es: spanishContent,
 };

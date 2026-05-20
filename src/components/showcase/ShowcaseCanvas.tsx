@@ -15,6 +15,7 @@ type ShowcaseCanvasProps = {
   mode: ViewMode;
   setMode: (mode: ViewMode) => void;
   themeMode: ThemeMode;
+  isShowcaseReady?: boolean;
 };
 
 export default function ShowcaseCanvas({
