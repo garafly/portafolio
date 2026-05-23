@@ -1,12 +1,12 @@
 "use client";
 
-import type { ViewMode, ThemeMode } from "@/types";
+import type { ViewMode, ThemeMode, Locale } from "@/types";
 import { themeTokens } from "@/lib/theme-config";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 type AnnotationItem = {
-  label: string;
+  label: Record<Locale, string>;
   containerClassName: string;
   lineClassName?: string;
   dotSide?: "left" | "right";
@@ -22,25 +22,35 @@ type ShowcaseAnnotationsProps = {
   mode: ViewMode;
   modelMode?: ViewMode;
   themeMode: ThemeMode;
+  locale: Locale;
   isShowcaseReady?: boolean;
 };
 
 const annotationsByMode: Record<ViewMode, AnnotationItem[]> = {
   intro: [
     {
-        label: "Self-taught",
+        label: {
+          en: "Self-taught",
+          es: "Autodidacta",
+        },
         containerClassName: "top-[13%] left-[39%] gap-1",
         lineClassName: "w-20",
         dotSide: "left",
     },
     {
-        label: "Passionate",
+        label: {
+          en: "Passionate",
+          es: "Apasionada",
+        },
         containerClassName: "top-[53%] left-[-22%] gap-1",
         lineClassName: "w-42 ",
         dotSide: "right",
     },
     {
-        label: "Driven",
+        label: {
+          en: "Driven",
+          es: "Determinada",
+        },
         containerClassName: "bottom-[24%] left-[62%]  gap-1",
         lineClassName: "w-14 ",
         dotSide: "left",
@@ -49,19 +59,28 @@ const annotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   designer: [
     {
-      label: "UI/UX",
+      label: {
+          en: "UI/UX",
+          es: "UI/UX",
+      },
       containerClassName: "top-[12%] left-[4%] gap-1",
       lineClassName: "w-10",
       dotSide: "right",
     },
     {
-      label: "Graphic Design",
+      label: {
+          en: "Graphic Design",
+          es: "Diseño Gráfico",
+      },
       containerClassName: "top-[38%] left-[-34%] gap-1",
       lineClassName: "w-28",
       dotSide: "right",
     },
     {
-      label: "Brand-savvy",
+      label: {
+          en: "Brand-savvy",
+          es: "Visión de Marca",
+      },
       containerClassName: "top-[22%] left-[44%] gap-1",
       lineClassName: "w-30",
       dotSide: "left",
@@ -70,19 +89,28 @@ const annotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   programmer: [
     {
-      label: "Problem-solver",
+      label: {
+          en: "Problem-solver",
+          es: "Resolutiva",
+      },
       containerClassName: "top-[19%] left-[12%] gap-1",
       lineClassName: "w-32",
       dotSide: "right",
     },
     {
-      label: "TypeScript",
+      label: {
+          en: "TypeScript",
+          es: "TypeScript",
+      },
       containerClassName: "top-[50%] left-[-29%] gap-1",
       lineClassName: "w-46",
       dotSide: "right",
     },
     {
-      label: "Frontend",
+      label: {
+          en: "Frontend",
+          es: "Frontend",
+      },
       containerClassName: "top-[27%] left-[81%] gap-1",
       lineClassName: "w-2",
       dotSide: "left",
@@ -91,19 +119,28 @@ const annotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   animator: [
     {
-      label: "Playful",
-      containerClassName: "top-[22%] left-[-2%] gap-1",
-      lineClassName: "w-8",
+      label: {
+          en: "Playful",
+          es: "Ingeniosa",
+      },
+      containerClassName: "top-[24%] left-[-6%] gap-1",
+      lineClassName: "w-10",
       dotSide: "right",
     },
     {
-      label: "Crafty",
+      label: {
+          en: "Crafty",
+          es: "Hábil",
+      },
       containerClassName: "top-[64%] left-[-10%] gap-1",
       lineClassName: "w-20",
       dotSide: "right",
     },
     {
-      label: "Creative",
+      label: {
+          en: "Creative",
+          es: "Creativa",
+      },
       containerClassName: "top-[24%] left-[55%] gap-1",
       lineClassName: "w-36",
       dotSide: "left",
@@ -121,19 +158,28 @@ const annotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 const largeAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
   intro: [
     {
-      label: "Self-taught",
+      label: {
+        en: "Self-taught",
+        es: "Autodidacta",
+      },
       containerClassName: "top-[13%] left-[39%]  gap-1",
       lineClassName: "w-20 xl:w-24",
       dotSide: "left",
     },
     {
-      label: "Passionate",
+      label: {
+        en: "Passionate",
+        es: "Apasionada",
+      },
       containerClassName: " left-[-22%] xl:left-[-8%] top-[58%] gap-1",
       lineClassName: "w-42 xl:w-46",
       dotSide: "right",
     },
     {
-      label: "Driven",
+      label: {
+        en: "Driven",
+        es: "Determinada",
+      },
       containerClassName: "bottom-[24%] left-[62%] gap-1",
       lineClassName: "w-14 xl:w-18",
       dotSide: "left",
@@ -142,19 +188,28 @@ const largeAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   designer: [
     {
-      label: "UI/UX",
+      label: {
+          en: "UI/UX",
+          es: "UI/UX",
+      },
       containerClassName: "top-[12%] left-[8%] xl:left-[16%] gap-1",
       lineClassName: "w-8 xl:w-10",
       dotSide: "right",
     },
     {
-      label: "Graphic Design",
+      label: {
+          en: "Graphic Design",
+          es: "Diseño Gráfico",
+      },
       containerClassName: "top-[38%] left-[-24%] xl:top-[36%] gap-1",
       lineClassName: "w-20 xl:w-42",
       dotSide: "right",
     },
     {
-      label: "Brand-savvy",
+      label: {
+          en: "Brand-savvy",
+          es: "Visión de Marca",
+      },
       containerClassName: "top-[22%] left-[44%] gap-1",
       lineClassName: "w-24 xl:w-28",
       dotSide: "left",
@@ -163,19 +218,28 @@ const largeAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   programmer: [
     {
-      label: "Problem-solver",
+      label: {
+          en: "Problem-solver",
+          es: "Resolutiva",
+      },
       containerClassName: "top-[19%] left-[12%] gap-1",
       lineClassName: "w-24 xl:w-38",
       dotSide: "right",
     },
     {
-      label: "TypeScript",
+      label: {
+          en: "TypeScript",
+          es: "TypeScript",
+      },
       containerClassName: "top-[56%] left-[-6%] xl:left-[2%] gap-1",
       lineClassName: "w-26 xl:w-30",
       dotSide: "right",
     },
     {
-      label: "Frontend",
+      label: {
+          en: "Frontend",
+          es: "Frontend",
+      },
       containerClassName: "top-[27%] left-[76%] gap-1",
       lineClassName: "w-6 xl:w-8",
       dotSide: "left",
@@ -184,19 +248,28 @@ const largeAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   animator: [
     {
-      label: "Playful",
+      label: {
+          en: "Playful",
+          es: "Ingeniosa",
+      },
       containerClassName: "top-[24%] left-[0%] xl:top-[26%] gap-1",
       lineClassName: "w-8 xl:w-22",
       dotSide: "right",
     },
     {
-      label: "Crafty",
+      label: {
+          en: "Crafty",
+          es: "Hábil",
+      },
       containerClassName: "top-[64%] left-[-4%] gap-1",
       lineClassName: "w-14 xl:w-34",
       dotSide: "right",
     },
     {
-      label: "Creative",
+      label: {
+          en: "Creative",
+          es: "Creativa",
+      },
       containerClassName: "top-[24%] left-[55%] xl:left-[53%] gap-1",
       lineClassName: "w-28 xl:w-32",
       dotSide: "left",
@@ -211,19 +284,28 @@ const largeAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 const mobileAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
   intro: [
     {
-      label: "Self-taught",
+      label: {
+        en: "Self-taught",
+        es: "Autodidacta",
+      },
       containerClassName: "top-[13%] left-[40%] gap-1",
       lineClassName: "w-10",
       dotSide: "left",
     },
     {
-      label: "Passionate",
+      label: {
+        en: "Passionate",
+        es: "Apasionada",
+      },
       containerClassName: "top-[58%] -left-[1%] gap-1",
       lineClassName: "w-6",
       dotSide: "right",
     },
     {
-      label: "Driven",
+      label: {
+        en: "Driven",
+        es: "Determinada",
+      },
       containerClassName: "bottom-[20%] left-[54%] gap-1",
       lineClassName: "w-12",
       dotSide: "left",
@@ -232,40 +314,58 @@ const mobileAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   designer: [
     {
-      label: "UI/UX",
+      label: {
+          en: "UI/UX",
+          es: "UI/UX",
+      },
       containerClassName: "top-[12%] left-[2%] gap-1",
       lineClassName: "w-12",
       dotSide: "right",
     },
     {
-      label: "Graphic Design",
+      label: {
+          en: "Graphic Design",
+          es: "Diseño Gráfico",
+      },
       containerClassName: "top-[36%] -left-[4%]",
       lineClassName: "w-1",
       dotSide: "right",
     },
     {
-      label: "Brand-savvy",
-      containerClassName: "top-[22%] right-[20%] gap-1",
-      lineClassName: "w-10",
+      label: {
+          en: "Brand-savvy",
+          es: "Visión de Marca",
+      },
+      containerClassName: "top-[22%] right-[12%] gap-1",
+      lineClassName: "w-12",
       dotSide: "left",
     },
   ],
 
   programmer: [
     {
-      label: "Problem-solver",
+      label: {
+          en: "Problem-solver",
+          es: "Resolutiva",
+      },
       containerClassName: "top-[20%] left-[26%] gap-1",
       lineClassName: "w-16",
       dotSide: "right",
     },
     {
-      label: "TypeScript",
+      label: {
+          en: "TypeScript",
+          es: "TypeScript",
+      },
       containerClassName: "top-[52%] left-[2%] gap-1",
       lineClassName: "w-14",
       dotSide: "right",
     },
     {
-      label: "Frontend",
+      label: {
+          en: "Frontend",
+          es: "Frontend",
+      },
       containerClassName: "top-[26%] -right-[2%] gap-1",
       lineClassName: "w-4",
       dotSide: "left",
@@ -274,19 +374,28 @@ const mobileAnnotationsByMode: Record<ViewMode, AnnotationItem[]> = {
 
   animator: [
     {
-      label: "Playful",
+      label: {
+          en: "Playful",
+          es: "Ingeniosa",
+      },
       containerClassName: "top-[24%] left-[3%] gap-1",
       lineClassName: "w-8",
       dotSide: "right",
     },
     {
-      label: "Crafty",
+      label: {
+          en: "Crafty",
+          es: "Hábil",
+      },
       containerClassName: "top-[68%] left-[3%] gap-1",
       lineClassName: "w-10",
       dotSide: "right",
     },
     {
-      label: "Creative",
+      label: {
+          en: "Creative",
+          es: "Creativa",
+      },
       containerClassName: "top-[24%] right-[4%] gap-1",
       lineClassName: "w-21",
       dotSide: "left",
@@ -866,6 +975,7 @@ export default function ShowcaseAnnotations({
   mode,
   modelMode,
   themeMode,
+  locale,
   isShowcaseReady = true,
 }: ShowcaseAnnotationsProps) {
   const desktopAnnotations = annotationsByMode[mode];
@@ -899,8 +1009,9 @@ export default function ShowcaseAnnotations({
 
           return (
             <AnnotationLabel
-              key={`${mode}-${activeModelMode}-${item.label}`}
+              key={`${mode}-${activeModelMode}-${item.label.en}`}
               item={item}
+              locale={locale}
               labelClassName={adjustment?.labelClassName}
               connectorClassName={adjustment?.connectorClassName}
               lineClassName={adjustment?.lineClassName}
@@ -919,8 +1030,9 @@ export default function ShowcaseAnnotations({
 
           return (
             <AnnotationLabel
-              key={`${mode}-${activeModelMode}-${item.label}`}
+              key={`${mode}-${activeModelMode}-${item.label.en}`}
               item={item}
+              locale={locale}
               labelClassName={adjustment?.labelClassName}
               connectorClassName={adjustment?.connectorClassName}
               lineClassName={adjustment?.lineClassName}
@@ -939,8 +1051,9 @@ export default function ShowcaseAnnotations({
 
           return (
             <AnnotationLabel
-              key={`${mode}-${activeModelMode}-${item.label}`}
+              key={`${mode}-${activeModelMode}-${item.label.en}`}
               item={item}
+              locale={locale}
               labelClassName={adjustment?.labelClassName}
               connectorClassName={adjustment?.connectorClassName}
               lineClassName={adjustment?.lineClassName}
@@ -1009,6 +1122,7 @@ export default function ShowcaseAnnotations({
 
 function AnnotationLabel({
   item,
+  locale,
   labelClassName,
   connectorClassName,
   lineClassName,
@@ -1016,6 +1130,7 @@ function AnnotationLabel({
   variant = "desktop",
 }: {
   item: AnnotationItem;
+  locale: Locale;
   labelClassName?: string;
   connectorClassName?: string;
   lineClassName?: string;
@@ -1065,7 +1180,7 @@ function AnnotationLabel({
         isDesktop && "text-2xl"
       )}
     >
-      {item.label}
+      {item.label[locale]}
     </span>
   );
 

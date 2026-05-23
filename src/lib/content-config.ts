@@ -980,6 +980,11 @@ const spanishContent: PortfolioContentConfig = {
         },
         englishContent.modes.programmer.leftCards[1],
         {
+          id: "reusable-ui",
+          text: "Animaciones, transiciones, integraciones 3D, interfaces juguetonas e interacciones tipo juego.",
+          size: "md",
+        },
+        {
           id: "programmer-focus",
           title: "Interfaces Frontend",
           text: "Páginas Responsivas • Dashboards • Landing Pages • Marketing Sites • Pantallas para Apps.",

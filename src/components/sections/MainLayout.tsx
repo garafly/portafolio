@@ -300,6 +300,7 @@ useEffect(() => {
                     mode={mode}
                     modelMode={modelMode}
                     themeMode={themeMode}
+                    locale={locale}
                     isShowcaseReady={isShowcaseReady}
                   />
                 </div>
